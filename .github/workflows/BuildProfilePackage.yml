@@ -76,7 +76,7 @@ jobs:
       - name: Package Files
         run: |
           mv ./${{ env.VEHICLE }}/Helios .
-          zip -r output/${{ env.VEHICLE }} ${{ steps.vars.outputs.HELIOSBUILDTYPE }}_V${{ steps.bump_tag.outputs.tag }}.helios16 ./Profile16.json ./LICENSE ./*.md ./Helios/ -x ".git/*" ".github/*" "./Helios/Profiles/*.bak" "./Helios/Profiles/*.hply"
+          zip -r "output/${{ env.VEHICLE }} ${{ steps.vars.outputs.HELIOSBUILDTYPE }}_V${{ steps.bump_tag.outputs.tag }}.helios16" ./Profile16.json ./LICENSE ./*.md ./Helios/ -x ".git/*" ".github/*" "./Helios/Profiles/*.bak" "./Helios/Profiles/*.hply"
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ env.VEHICLECOMMONNAME }} V${{ steps.bump_tag.outputs.tag }} helios16 package
