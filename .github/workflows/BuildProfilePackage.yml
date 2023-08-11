@@ -80,7 +80,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ env.VEHICLECOMMONNAME }} V${{ steps.bump_tag.outputs.tag }} helios16 package
-          path: output/${{ env.VEHICLE }}_V${{ steps.bump_tag.outputs.tag }}.helios16
+          path: output/${{ env.VEHICLE }} ${{ steps.vars.outputs.HELIOSBUILDTYPE }}_V${{ steps.bump_tag.outputs.tag }}.helios16
           retention-days: 2
       - name: Read About file
         id: getAbout
