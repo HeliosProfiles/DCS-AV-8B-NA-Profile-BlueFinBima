@@ -19,7 +19,7 @@ env:
   VEHICLECOMMONNAME: AV-8B Harrier
   MINHELIOSRELEASE: 1.6.5400.0000
   PROFILENAME: AV-8BNA
-
+  AUTHOR: BlueFinBima
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -45,7 +45,7 @@ jobs:
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO_OWNER: BlueFinBima
+          REPO_OWNER: HeliosProfiles
           DEFAULT_BUMP: 'patch'
           INITIAL_VERSION: '5.0.0'
       - name: Check outputs
@@ -81,3 +81,31 @@ jobs:
           name: ${{ env.VEHICLECOMMONNAME }} V${{ steps.bump_tag.outputs.tag }} helios16 package
           path: output/${{ env.VEHICLE }}_V${{ steps.bump_tag.outputs.tag }}.helios16
           retention-days: 2
+      - name: Read About file
+        id: getAbout
+        run: |
+          echo "ABOUT<<EOF" >> $GITHUB_ENV
+          echo "$(cat './${{ env.VEHICLECOMMONNAME }} - About this profile.md')" >> $GITHUB_ENV
+          echo "$(cat './README.md')" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.bump_tag.outputs.tag }}
+          release_name: ${{ env.VEHICLECOMMONNAME }} V${{ steps.bump_tag.outputs.tag }} by ${{ env.AUTHOR }}
+          body: ${{ env.ABOUT }}
+          draft: true
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: output/${{ env.VEHICLE }} ${{ steps.vars.outputs.HELIOSBUILDTYPE }}_V${{ steps.bump_tag.outputs.tag }}.helios16
+          asset_name: ${{ env.AUTHOR }} ${{ env.VEHICLECOMMONNAME }} V${{ steps.bump_tag.outputs.tag }} helios16
+          asset_content_type: application/zip

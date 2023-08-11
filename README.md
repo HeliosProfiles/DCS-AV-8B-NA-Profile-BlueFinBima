@@ -1,4 +1,4 @@
-[![CreateHelios16](https://github.com/BlueFinBima/DCS-AV-8B-NA-Profile/actions/workflows/BuildProfilePackage.yml/badge.svg)](https://github.com/BlueFinBima/DCS-AV-8B-NA-Profile/actions/workflows/BuildProfilePackage.yml)
+[![CreateHelios16](https://github.com/HeliosProfiles/DCS-AV-8B-NA-Profile-BlueFinBima/actions/workflows/BuildProfilePackage.yml/badge.svg)](https://github.com/HeliosProfiles/DCS-AV-8B-NA-Profile-BlueFinBima/actions/workflows/BuildProfilePackage.yml)
 # DCS-AV-8B-NA-Profile
 
 ## Download Profile from [here](https://github.com/BlueFinBima/DCS-AV-8B-NA-Profile/releases/latest)
